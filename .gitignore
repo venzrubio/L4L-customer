@@ -1,0 +1,7 @@
+/platforms
+/www
+*.apk
+node_modules
+/node_modules
+platforms
+*.zip

@@ -1,0 +1,7 @@
+{
+  "name": "look4lokal",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

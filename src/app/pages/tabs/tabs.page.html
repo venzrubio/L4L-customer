@@ -1,0 +1,39 @@
+<!-- 
+   Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
+  Created : 10-Sep-2020
+  This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
+ -->
+<ion-tabs>
+  <ion-tab-bar slot="bottom" class="ion-no-border">
+    <ion-tab-button (click)="ionViewWillEnter()" tab="home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label> {{util.getString('Home')}} </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="ionViewWillEnter()" tab="stores">
+      <ion-icon src="assets/icon/storefront-outline.svg"></ion-icon>
+      <ion-label> {{util.getString('Lokals')}} </ion-label>
+    </ion-tab-button>
+
+    <!-- <ion-tab-button (click)="ionViewWillEnter()" tab="calendar">
+      <ion-icon name="basket-outline"></ion-icon>
+      <ion-label> {{util.getString('Cart')}} </ion-label>
+      < <ion-badge color="danger" *ngIf="cart.cart?.length"> {{cart.cart.length}} </ion-badge> 
+    </ion-tab-button> -->
+
+    <ion-tab-button (click)="ionViewWillEnter()" tab="orders">
+      <ion-icon name="newspaper-outline"></ion-icon>
+      <ion-label> Bookings </ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="chat">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+      <ion-label>Messages <span *ngIf="getdata != 0" class="badge">{{getdata}}</span></ion-label>
+      <!-- <ion-label>Messages <span  class="badge">{{count}}</span></ion-label> -->
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

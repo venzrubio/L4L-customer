@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="backs()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-title>Select Time</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-button (click)="close()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Book for {{ viewTitle }}</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="save()">
+      <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar> -->
+ 
+<ion-content>
+  
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-title>Book for {{ viewTitle }}</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+     
+
+ 
+  <!-- <ion-item>
+    <ion-label position="stacked">Description</ion-label>
+    <ion-input type="text" ></ion-input>
+  </ion-item> -->
+
+  <ion-item>
+    <ion-label position="stacked">Start Time:</ion-label>
+    <ion-datetime placeholder="Select time" (ionChange)="timepickerStart($event)" [(ngModel)]="myDateStart" mode="ios" displayFormat="h:mm a"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">End Time:</ion-label>
+    <ion-datetime placeholder="Select time"  (ionChange)="timepickerEnd($event)" [(ngModel)]="myDateEnd" mode="ios" displayFormat="h:mm a"></ion-datetime>
+  </ion-item>
+
+
+  <!-- <ion-row>
+    <ion-col size="6" class="col2">
+      <ion-button (click)="close()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+    
+    <ion-col size="6">
+      <ion-button (click)="save()">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row> -->
+
+  
+ 
+
+
+    </ion-card-content>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="save()">
+    <!-- [disabled]="showAdd" -->
+    <ion-fab-button class="next">
+      Next
+      <ion-icon class="nexticon" name="arrow-forward-outline"></ion-icon>
+   
+    </ion-fab-button>
+    <!-- <ion-fab-button  >
+      Next
+      <ion-icon class="nexticon" name="arrow-forward-outline"></ion-icon>
+    </ion-fab-button> -->
+  </ion-fab>
+  
+
+</ion-content>
