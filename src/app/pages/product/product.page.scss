@@ -466,33 +466,3 @@
           }
       }
 }
-.small_flex{
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  .btnBtm{
-      display: flex;
-      flex-direction: row-reverse;
-      font-size: 12px;
-      .ripple-parent {
-          position: relative;
-          overflow: hidden;
-          padding: 5px;
-          color: white;
-          background: #ff914d;
-          border-radius: 5px;
-      }
-  }
-  // .left{
-  //     display: flex;
-  //     img{
-  //         width: 15px;
-  //         height: 15px;
-  //     }
-  //     ion-label {
-  //         font-family: muli-bold;
-  //         font-size: 14px;
-  //         padding-left: 10px;          
-  //     }
-  // } 
-}

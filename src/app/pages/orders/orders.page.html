@@ -86,11 +86,11 @@
               <span>{{order.name}} <span *ngIf="order.size ==='1'"> - {{order.variations[0].items[order.variant].title}}
                 </span> </span>
               <span>X {{order.quantiy}}</span>
-              <p *ngIf="item.paid_method == 'Cash on Delivery'" class="items">
+              <!-- <p *ngIf="item.paid_method == 'Cash on Delivery'" class="items">
                 <span>Delivery Charge <span >
                   </span> </span>
                 <span>{{util.currecny}}{{item.delivery_charge}}</span>
-            </p>
+            </p> -->
             <p class="items">
               <span>Service Charge <span >
                 </span> </span>
