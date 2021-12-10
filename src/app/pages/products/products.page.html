@@ -170,8 +170,9 @@
 
 
             <div class="btnBtm" *ngIf="!cart.itemId.includes(item.id) && item.quantiy <= 0 && item.in_stoke === '1'">
-              <div class="ion-activatable ripple-parent" (click)="addToCart(item,i)">
-                {{util.getString('Add')}}
+              <!-- <div class="ion-activatable ripple-parent" (click)="addToCart(item,i)"> -->
+                <div class="ion-activatable ripple-parent" (click)="book(products)">
+                {{util.getString('Book')}}
                 <ion-ripple-effect></ion-ripple-effect>
               </div>
             </div>
@@ -304,7 +305,7 @@
 
 
 
-          <div class="btnBtm" *ngIf="!cart.itemId.includes(item.id) && item.quantiy <= 0 && item.in_stoke === '1'">
+          <!-- <div class="btnBtm" *ngIf="!cart.itemId.includes(item.id) && item.quantiy <= 0 && item.in_stoke === '1'">
             <div class="ion-activatable ripple-parent" (click)="addToCart(item,i)">
               {{util.getString('Add')}}
               <ion-ripple-effect></ion-ripple-effect>
@@ -316,7 +317,7 @@
               <ion-label>{{item.quantiy}}</ion-label>
               <img src="assets/imgs/add.svg" (click)="add(item,i)">
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

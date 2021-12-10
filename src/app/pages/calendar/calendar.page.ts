@@ -265,7 +265,7 @@ export class CalendarPage implements OnInit {
 
   this.api.post('stores/getBooking', params).subscribe((res: any)=>{
 
-    // console.log(res);
+    console.log(res);
 
     var a = res.data
 

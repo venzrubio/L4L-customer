@@ -7,7 +7,7 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2020-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -75,6 +75,10 @@ export class ProductPage implements OnInit {
   variant: any;
   storeIsActive: boolean = false;
   km:any;
+
+  topProducts: any[] = [];
+
+  stores: any[] = [];
   constructor(
     public api: ApiService,
     public util: UtilService,
@@ -83,7 +87,8 @@ export class ProductPage implements OnInit {
     private router: Router,
     public cart: CartService,
     private modalController: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private chMod: ChangeDetectorRef,
   ) {
 
     this.route.queryParams.subscribe((data: any) => {
@@ -95,6 +100,122 @@ export class ProductPage implements OnInit {
       }
     })
   }
+
+  ionViewWillEnter(){
+
+    this.getInit();
+
+  }
+
+  getInit() {
+
+
+    this.topProducts = [];
+
+    const param = {
+      id: localStorage.getItem('city'),
+      uid: localStorage.getItem('uid'),
+      clat: localStorage.getItem('current_lat'),
+      clng: localStorage.getItem('current_lng')
+    }
+
+    const param1 = {
+      id: localStorage.getItem('city'),
+      uid: localStorage.getItem('uid'),
+      clat: localStorage.getItem('current_lat'),
+      clng: localStorage.getItem('current_lng')
+
+    }
+
+    this.api.post('stores/getTopNearestStore', param).subscribe((stores: any) => {
+
+      this.stores = [];
+      if (stores && stores.status === 200 && stores.data && stores.data.length) {
+        console.log('city found');
+        this.stores = stores.data;
+        this.stores.sort((a, b) => parseFloat(a.km) - parseFloat(b.km));
+        this.stores.forEach(async (element) => {
+          // element['isOpen'] = await this.isOpen(element.open_time, element.close_time);
+        });
+
+        this.util.active_store = [...new Set(this.stores.map(item => item.uid))];
+        console.log('store====>>>', this.stores);
+
+        this.topProducts = [];
+        // this.dummyTopProducts = Array(5);
+
+
+
+        this.api.post('products/getTopRated', param).subscribe((data: any) => {
+          console.log('top products', data);
+
+          var uniqueNames = [];
+          var uniqueObj = [];
+          for (var i = 0; i < data.data.length; i++) {
+            if (uniqueNames.indexOf(data.data[i].name) === -1) {
+              uniqueObj.push(data.data[i])
+              uniqueNames.push(data.data[i].name);
+            }
+          }
+          console.log(uniqueObj)
+          data.data = uniqueObj;
+
+          data.data.sort((a, b) => parseFloat(a.km) - parseFloat(b.km));
+
+
+          // this.dummyTopProducts = [];
+          if (data && data.status === 200 && data.data && data.data.length) {
+            data.data.forEach(element => {
+              if (element.variations && element.size === '1' && element.variations !== '') {
+                if (((x) => { try { JSON.parse(x); return true; } catch (e) { return false } })(element.variations)) {
+                  element.variations = JSON.parse(element.variations);
+                  element['variant'] = 0;
+                } else {
+                  element.variations = [];
+                  element['variant'] = 1;
+                }
+              } else {
+                element.variations = [];
+                element['variant'] = 1;
+              }
+              if (this.cart.itemId.includes(element.id)) {
+                const index = this.cart.cart.filter(x => x.id === element.id);
+                element['quantiy'] = index[0].quantiy;
+              } else {
+                element['quantiy'] = 0;
+              }
+              if (this.util.active_store.includes(element.store_id)) {
+                this.topProducts.push(element);
+              }
+
+            });
+          }
+        }, error => {
+          console.log(error);
+          // this.dummyTopProducts = [];
+        });
+
+
+        console.log(param);
+
+      } else {
+ 
+        console.log('no city found');
+     
+        this.topProducts = [];
+  
+        this.chMod.detectChanges();
+      }
+    }, error => {
+      console.log('error in get store by city', error);
+     
+      this.topProducts = [];
+     
+      this.util.errorToast(this.util.getString('Something went wrong'));
+      this.chMod.detectChanges();
+    });
+  }
+
   async openViewer(url) {
     const modal = await this.modalController.create({
       component: ViewerModalComponent,
@@ -273,6 +394,48 @@ export class ProductPage implements OnInit {
     this.cart.addItem(this.productt);
   }
 
+  book(item){
+
+    // console.log(item)
+
+    this.cart.cart = [];
+    this.cart.itemId = [];
+
+    var i = this.cart.itemId.indexOf(item.id)
+  
+    if(i == -1){
+  
+      item.quantiy = 1
+
+      localStorage.setItem('sid', item.store_id)
+     
+      // this.topProducts[i].quantiy = 1;
+      this.cart.addItem(item); 
+      this.cart.deliveryAt = "home";
+  
+      console.log(this.cart)
+  
+       this.router.navigate(['tabs/home/address'])
+  
+    }else{
+  
+      this.remove(item, i);
+
+      item.quantiy = 1
+  
+      localStorage.setItem('sid', item.store_id)
+     
+      // this.topProducts[i].quantiy = 1;
+      this.cart.addItem(item); 
+      this.cart.deliveryAt = "home";
+  
+      console.log(this.cart)
+  
+       this.router.navigate(['tabs/home/address'])
+      
+    }  
+  }
+
 
   gotoStore() {
     const param: NavigationExtras = {
@@ -289,7 +452,7 @@ export class ProductPage implements OnInit {
     this.cart.addQuantity(this.quantiy, this.id ,this.storeId);
   }
 
-  remove() {
+  removeold() {
     if (this.quantiy === 1) {
       this.quantiy = 0;
       this.cart.removeItem(this.id ,this.storeId)
@@ -297,6 +460,23 @@ export class ProductPage implements OnInit {
       this.quantiy = this.quantiy - 1;
       this.cart.addQuantity(this.quantiy, this.id , this.storeId);
     }
+  }
+
+  remove(product, index) {
+    console.log(product, index);
+    this.topProducts[index].quantiy = this.getQuanity(product.id);
+    if (this.topProducts[index].quantiy === 1) {
+      this.topProducts[index].quantiy = 0;
+      this.cart.removeItem(product.id, product.store_id)
+    } else {
+      this.topProducts[index].quantiy = this.topProducts[index].quantiy - 1;
+      this.cart.addQuantity(this.topProducts[index].quantiy, product.id, product.store_id);
+    }
+  }
+
+  getQuanity(id) {
+    const data = this.cart.cart.filter(x => x.id === id);
+    return data[0].quantiy;
   }
 
   onShare() {

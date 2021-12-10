@@ -706,6 +706,9 @@ book(item, index){
 
   // console.log(item);
 
+  this.cart.cart = [];
+  this.cart.itemId = [];
+
   var i = this.cart.itemId.indexOf(item.id)
 
   if(i == -1){

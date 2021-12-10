@@ -340,6 +340,43 @@ export class StorePage implements OnInit {
     this.cart.addItem(item);
   }
 
+  book(item, index){
+
+    this.cart.cart = [];
+    this.cart.itemId = [];
+    
+    var i = this.cart.itemId.indexOf(item.id)
+  
+    if(i == -1){
+      item.quantiy = 1
+      localStorage.setItem('sid', item.store_id)
+     
+      // this.topProducts[index].quantiy = 1;
+      this.cart.addItem(item); 
+      this.cart.deliveryAt = "home";
+  
+      console.log(this.cart)
+  
+       this.router.navigate(['tabs/home/address'])
+  
+    }else{
+  
+      this.remove(item, index);
+      item.quantiy = 1
+
+      localStorage.setItem('sid', item.store_id)
+     
+      // this.topProducts[index].quantiy = 1;
+      this.cart.addItem(item); 
+      this.cart.deliveryAt = "home";
+  
+      console.log(this.cart)
+  
+       this.router.navigate(['tabs/home/address'])
+      
+    }  
+  }
+
   checkCart(id) {
     const item = this.cart.itemId;
     console.log('item', item);

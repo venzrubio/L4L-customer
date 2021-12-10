@@ -181,11 +181,65 @@ export class SubCategoryPage implements OnInit {
     });
   }
 
-  addToCart(item, index) {
-    console.log(item);
-    this.products[index].quantiy = 1;
-    this.cart.addItem(item);
+  // addToCart(item, index) {
+  //   console.log(item);
+  //   this.products[index].quantiy = 1;
+  //   this.cart.addItem(item);
+  // }
+
+book(products){
+console.log(products)
+
+{
+  var item = products[0]
+  console.log(item)
+  
+  this.cart.cart = [];
+  this.cart.itemId = [];
+  
+  var i = this.cart.itemId.indexOf(item.id)
+  
+  if(i == -1){
+  
+    item.quantiy = 1
+  
+    localStorage.setItem('sid', item.store_id)
+   
+    // this.topProducts[i].quantiy = 1;
+    this.cart.addItem(item); 
+    this.cart.deliveryAt = "home";
+  
+    console.log(this.cart)
+  
+     this.router.navigate(['tabs/home/address'])
+  
+  }else{
+  
+    this.remove(item, i);
+  
+    item.quantiy = 1
+  
+    localStorage.setItem('sid', item.store_id)
+   
+    // this.topProducts[i].quantiy = 1;
+    this.cart.addItem(item); 
+    this.cart.deliveryAt = "home";
+  
+    console.log(this.cart)
+  
+     this.router.navigate(['tabs/home/address'])
+    
+  }  
   }
+
+}
+
+
+
+
+
+
+
 
 
   add(product, index) {

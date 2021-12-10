@@ -178,16 +178,16 @@
                 </span>
               </ion-label>
             </div>
-            <div class="btnBtm"
-              *ngIf="!cart.itemId.includes(item.id) && item.quantiy <= 0 && item.in_stoke === '1' && storeIsActive === true">
-              <div class="ion-activatable ripple-parent" (click)="addToCart(item,i)">
-                {{util.getString('Add')}}
+            <!-- *ngIf="!cart.itemId.includes(item.id) && item.quantiy <= 0 && item.in_stoke === '1' && storeIsActive === true" -->
+            <div class="btnBtm">
+              <div class="ion-activatable ripple-parent" (click)="book(item,i)">
+                {{util.getString('Book')}}
                 <ion-ripple-effect></ion-ripple-effect>
               </div>
             </div>
             <div *ngIf="item.in_stoke !== '1'" style="height:30px"></div>
 
-            <div class="cartBtn" *ngIf="cart.itemId.includes(item.id)">
+            <!-- <div class="cartBtn" *ngIf="cart.itemId.includes(item.id)">
               <div class="abs_add">
                 <img src="assets/imgs/remove.svg" (click)="remove(item,i)">
                 <ion-label *ngIf="item.quantiy !== 0">{{item.quantiy}}</ion-label>
@@ -196,7 +196,7 @@
                 </ion-label>
                 <img src="assets/imgs/add.svg" (click)="add(item,i)">
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </ion-col>

@@ -143,20 +143,20 @@
 
         
 
-
+  <!-- *ngIf="!cart.itemId.includes(id) && quantiy <= 0 && status ==='1' && in_stoke ==='1' && storeIsActive ===true" -->
         <div class="addBtn"
-          *ngIf="!cart.itemId.includes(id) && quantiy <= 0 && status ==='1' && in_stoke ==='1' && storeIsActive ===true">
-          <div class="ion-activatable ripple-parent" (click)="addToCart()">
-            {{util.getString('Add')}}
+          >
+          <div class="ion-activatable ripple-parent" (click)="book(productt)">
+            {{util.getString('Book')}}
             <ion-ripple-effect></ion-ripple-effect>
           </div>
         </div>
 
-        <div class="abs_add" *ngIf="cart.itemId.includes(id)">
+        <!-- <div class="abs_add" *ngIf="cart.itemId.includes(id)">
           <img src="assets/imgs/remove.svg" (click)="remove()">
           <ion-label>{{quantiy}}</ion-label>
           <img src="assets/imgs/add.svg" (click)="add()">
-        </div>
+        </div> -->
       </div>
 
       <div class="pro_desc_div" *ngIf="description">
